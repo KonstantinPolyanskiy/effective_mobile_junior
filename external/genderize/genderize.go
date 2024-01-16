@@ -41,7 +41,7 @@ type Result struct {
 	Probability float64 `json:"probability"`
 }
 
-// GenderInfoByName возвращает Result (информацию о возрасте) по переданному имени
+// GenderInfoByName возвращает Result (информацию о гендере) по переданному имени
 func (e Engine) GenderInfoByName(name string) (Result, error) {
 	var res Result
 
