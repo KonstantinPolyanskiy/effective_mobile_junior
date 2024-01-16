@@ -45,7 +45,7 @@ type Result struct {
 func (e Engine) GenderInfoByName(name string) (Result, error) {
 	var res Result
 
-	// Создаем url вида: https://api.agify.io/?name=Konstantin
+	// Создаем url вида: https://api.genderize.io/?name=Konstantin
 	url := BaseResourceURL + name
 
 	resp, err := e.client.Get(url)
