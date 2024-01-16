@@ -38,30 +38,41 @@ type Result struct {
 	Count int    `json:"count"`
 	Name  string `json:"name"`
 	Age   int    `json:"age"`
+
+	Code int
 }
 
 // AgeInfoByName возвращает Result (информацию о возрасте) по переданному имени
 func (e Engine) AgeInfoByName(name string) (Result, error) {
-	var res Result
+	var res struct {
+		Count int    `json:"count"`
+		Name  string `json:"name"`
+		Age   int    `json:"age"`
+	}
 
 	// Создаем url вида: https://api.agify.io/?name=Konstantin
 	url := BaseResourceURL + name
 
 	resp, err := e.client.Get(url)
 	if err != nil {
-		return res, err
+		return Result{}, err
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return res, err
+		return Result{}, err
 	}
 
 	err = json.Unmarshal(body, &res)
 	if err != nil {
-		return res, err
+		return Result{}, err
 	}
 
-	return res, nil
+	return Result{
+		Count: res.Count,
+		Name:  res.Name,
+		Age:   res.Age,
+		Code:  resp.StatusCode,
+	}, nil
 }

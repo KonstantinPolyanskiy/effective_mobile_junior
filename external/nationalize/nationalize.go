@@ -43,30 +43,41 @@ type Result struct {
 	Count   int       `json:"count"`
 	Name    string    `json:"name"`
 	Country []Country `json:"country"`
+
+	Code int
 }
 
 // CountryInfoByName возвращает Result (информацию о стране) по переданному имени
 func (e Engine) CountryInfoByName(name string) (Result, error) {
-	var res Result
+	var res struct {
+		Count   int       `json:"count"`
+		Name    string    `json:"name"`
+		Country []Country `json:"country"`
+	}
 
 	// Создаем url вида: https://api.nationalize.io/?name=Konstantin
 	url := BaseResourceURL + name
 
 	resp, err := e.client.Get(url)
 	if err != nil {
-		return res, err
+		return Result{}, err
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return res, err
+		return Result{}, err
 	}
 
 	err = json.Unmarshal(body, &res)
 	if err != nil {
-		return res, err
+		return Result{}, err
 	}
 
-	return res, nil
+	return Result{
+		Count:   res.Count,
+		Name:    res.Name,
+		Country: res.Country,
+		Code:    resp.StatusCode,
+	}, nil
 }
