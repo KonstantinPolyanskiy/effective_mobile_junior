@@ -12,10 +12,10 @@ CREATE TABLE IF NOT EXISTS Person (
     age INTEGER NOT NULL,
 
     gender_name VARCHAR NOT NULL,
-    gender_probability REAL NOT NULL,
+    gender_probability numeric(4, 2) NOT NULL,
 
     country_code VARCHAR(2) NOT NULL,
-    country_probability REAL NOT NULL
+    country_probability numeric(4, 2) NOT NULL
 );
 -- +goose Down
 -- +goose StatementBegin
