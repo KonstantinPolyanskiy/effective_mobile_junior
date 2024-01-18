@@ -63,13 +63,33 @@ func (r Repository) RecordPerson(person model.PersonDTO) (model.PersonEntity, er
 }
 
 func (r Repository) EditPerson() {
-	//TODO implement me
-	panic("implement me")
+	panic("IMPL ME")
 }
 
 func (r Repository) DeletePerson(id int) (bool, error) {
-	//TODO implement me
-	panic("implement me")
+	var isDeleted bool
+
+	deletePersonQuery := `
+	UPDATE Person SET is_deleted = true 
+	WHERE person_id=$1
+	RETURNING is_deleted
+`
+
+	r.log.Debug("delete query",
+		zap.String("query", deletePersonQuery),
+	)
+
+	err := r.db.QueryRow(context.Background(), deletePersonQuery, id).Scan(&isDeleted)
+	if err != nil {
+		r.log.Debug("error soft delete person",
+			zap.Int("id person", id),
+			zap.String("error", err.Error()),
+		)
+
+		return false, err
+	}
+
+	return isDeleted, nil
 }
 
 func (r Repository) SelectPerson(params model.GetPersonReq) ([]model.PersonEntity, error) {
@@ -77,6 +97,7 @@ func (r Repository) SelectPerson(params model.GetPersonReq) ([]model.PersonEntit
 	query := squirrel.Select("person_id", "name", "surname", "patronymic", "age", "gender_name", "gender_probability", "country_code", "country_probability").
 		From("person").
 		Where(conditions(params.Name, params.CountryFilter, params.GenderType, params.Older)).
+		Where(squirrel.Eq{"is_deleted": false}).
 		Limit(uint64(params.Limit)).
 		Offset(uint64(params.Offset)).
 		PlaceholderFormat(squirrel.Dollar)

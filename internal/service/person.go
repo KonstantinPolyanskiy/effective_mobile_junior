@@ -7,16 +7,10 @@ import (
 	"effective_mobile_junior/external/nationalize"
 	"effective_mobile_junior/internal/model"
 	"errors"
+	"go.uber.org/zap"
 	"net/http"
 	"sync"
 )
-
-type Repository interface {
-	RecordPerson(person model.PersonDTO) (model.PersonEntity, error)
-	EditPerson()
-	DeletePerson(id int) (bool, error)
-	GetPerson(req model.GetPersonReq) ([]model.PersonEntity, error)
-}
 
 type AgeGetter interface {
 	AgeInfoByName(name string) (agify.Result, error)
@@ -81,13 +75,17 @@ func (s Service) SavePerson(ctx context.Context, person model.PostPersonReq) (mo
 
 			// Проверяем, не вернули ли сторонние API коды ошибок
 			if ageRes.Code != http.StatusOK || genderRes.Code != http.StatusOK || countryRes.Code != http.StatusOK {
+				s.log.Debug("third party service response not 200",
+					zap.Int("age response", ageRes.Code),
+					zap.Int("gender response", genderRes.Code),
+					zap.Int("country response", countryRes.Code),
+				)
 				return model.PersonEntity{}, errors.New("third-party service returned error")
 			}
 
 			code, chance := mostProbableCountry(countryRes)
 
 			// Передаем данные в слой данных и получаем записанный результат
-
 			dto := model.PersonDTO{
 				Personality: person.Personality,
 				Age:         model.Age{Age: ageRes.Age},
@@ -109,6 +107,15 @@ func (s Service) SavePerson(ctx context.Context, person model.PostPersonReq) (mo
 			return recordedPerson, nil
 		}
 	}
+}
+
+func (s Service) DeletePerson(id int) (bool, error) {
+	isDeleted, err := s.Repository.DeletePerson(id)
+	if err != nil {
+		return isDeleted, errors.New("error delete person")
+	}
+
+	return isDeleted, nil
 }
 
 func (s Service) ageInfo(name string, wg *sync.WaitGroup, ch chan<- agify.Result, errCh chan<- error) {
