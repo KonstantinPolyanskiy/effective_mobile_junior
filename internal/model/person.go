@@ -44,11 +44,7 @@ type PersonEntity struct {
 
 // GetPersonReq описывает, по каким параметрам и фильтрам нужно отдать пользователей
 type GetPersonReq struct {
-	Personality
-	Age
-	Gender
-	Country
-
+	Name       string
 	Limit      int
 	Offset     int
 	GenderType string
