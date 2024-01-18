@@ -5,25 +5,25 @@ type PostPersonReq struct {
 }
 
 type Age struct {
-	Age int `json:"age"`
+	Age int `json:"age" db:"age"`
 }
 
 type Personality struct {
-	Name       string `json:"name"`
-	Surname    string `json:"surname"`
-	Patronymic string `json:"patronymic"`
+	Name       string `json:"name" db:"name"`
+	Surname    string `json:"surname" db:"surname"`
+	Patronymic string `json:"patronymic" db:"patronymic"`
 }
 
 type Gender struct {
 	// Название гендера: male, female
-	Name        string  `json:"gender_name"`
-	Probability float64 `json:"gender_probability"`
+	Name        string  `json:"gender_name" db:"gender_name"`
+	Probability float64 `json:"gender_probability" db:"gender_probability"`
 }
 
 type Country struct {
 	// Код страны формата EN RU UK
-	Code        string
-	Probability float64
+	Code        string  `json:"country_code" db:"country_code"`
+	Probability float64 `json:"country_probability" db:"country_probability"`
 }
 
 type PersonDTO struct {
@@ -34,7 +34,7 @@ type PersonDTO struct {
 }
 
 type PersonEntity struct {
-	PersonId int
+	PersonId int `db:"person_id"`
 
 	Personality
 	Age
