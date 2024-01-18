@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"os"
 )
 
 type Config struct {
@@ -29,4 +30,24 @@ func NewConnPool(cfg Config) (*pgxpool.Pool, error) {
 	}
 
 	return pool, err
+}
+
+func NewConfig() Config {
+	return Config{
+		Host:     getEnv("POSTGRES_HOST", "localhost"),
+		Port:     getEnv("POSTGRES_PORT", "5432"),
+		Username: getEnv("POSTGRES_USER", "postgres"),
+		Password: getEnv("POSTGRES_PASSWORD", "publicPassword"),
+		DBName:   getEnv("POSTGRES_DBNAME", "postgres"),
+		SSLMode:  getEnv("POSTGRES_SSLMODE", "disable"),
+	}
+}
+
+// getEnv читает из .env файла, если значение не существует - возвращает переданное значение по умолчанию
+func getEnv(key, defaultVal string) string {
+	if value, exists := os.LookupEnv(key); exists {
+		return value
+	}
+
+	return defaultVal
 }
