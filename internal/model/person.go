@@ -34,7 +34,7 @@ type PersonDTO struct {
 }
 
 type PersonEntity struct {
-	PersonId int `db:"person_id"`
+	PersonId int `json:"person_id" db:"person_id"`
 
 	Personality
 	Age
