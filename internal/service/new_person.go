@@ -12,14 +12,17 @@ import (
 	"sync"
 )
 
+//go:generate go run github.com/vektra/mockery/v2@v2.28.2 --name=AgeGetter
 type AgeGetter interface {
 	AgeInfoByName(name string) (agify.Result, error)
 }
 
+//go:generate go run github.com/vektra/mockery/v2@v2.28.2 --name=GenderGetter
 type GenderGetter interface {
 	GenderInfoByName(name string) (genderize.Result, error)
 }
 
+//go:generate go run github.com/vektra/mockery/v2@v2.28.2 --name=CountryGetter
 type CountryGetter interface {
 	CountryInfoByName(name string) (nationalize.Result, error)
 }
