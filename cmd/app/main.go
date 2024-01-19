@@ -34,11 +34,13 @@ func main() {
 	}
 	l, err := logger.New(logLevel)
 	if err != nil {
-		l.Error("Ошибка чтения уровня",
+		l.Error("error read logging level",
 			zap.String("given level", "test"),
 			zap.String("error", err.Error()),
 		)
 	}
+
+	l.Info("level logging", zap.String("level", l.Level().String()))
 
 	// Подключение к БД
 	dbConf := postgres.NewConfig()
