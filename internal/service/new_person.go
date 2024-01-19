@@ -109,15 +109,6 @@ func (s Service) SavePerson(ctx context.Context, person model.PostPersonReq) (mo
 	}
 }
 
-func (s Service) DeletePerson(id int) (bool, error) {
-	isDeleted, err := s.Repository.DeletePerson(id)
-	if err != nil {
-		return isDeleted, errors.New("error delete person")
-	}
-
-	return isDeleted, nil
-}
-
 func (s Service) ageInfo(name string, wg *sync.WaitGroup, ch chan<- agify.Result, errCh chan<- error) {
 	defer wg.Done()
 
