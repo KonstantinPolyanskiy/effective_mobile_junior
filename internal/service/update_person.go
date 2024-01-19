@@ -24,10 +24,13 @@ func (s Service) ChangePerson(id int, updatePerson model.PersonDTO) (model.Perso
 
 	err = mergo.Merge(&currentDTO, updatePerson, mergo.WithOverride)
 	if err != nil {
+		s.log.Info("error merging current persona and updated persona",
+			zap.String("error", err.Error()),
+			zap.Any("current person", currentPerson),
+			zap.Any("updated person", updatePerson),
+		)
 		return model.PersonEntity{}, errors.New("internal server error")
 	}
-
-	s.log.Debug("recorded person", zap.Any("struct", currentDTO))
 
 	return model.PersonEntity{}, nil
 }

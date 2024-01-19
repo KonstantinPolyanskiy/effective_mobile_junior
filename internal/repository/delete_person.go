@@ -14,14 +14,11 @@ func (r Repository) SoftDeletePerson(id int) (bool, error) {
 	RETURNING is_deleted
 `
 
-	r.log.Debug("delete query",
-		zap.String("query", deletePersonQuery),
-	)
-
 	err := r.db.QueryRow(context.Background(), deletePersonQuery, id).Scan(&isDeleted)
 	if err != nil {
 		r.log.Debug("error soft delete person",
 			zap.Int("id person", id),
+			zap.String("query", deletePersonQuery),
 			zap.String("error", err.Error()),
 		)
 

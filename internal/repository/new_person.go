@@ -25,6 +25,7 @@ func (r Repository) RecordPerson(person model.PersonDTO) (model.PersonEntity, er
 	if err != nil {
 		r.log.Debug("error exec insert person query",
 			zap.String("query", insertPersonQuery),
+			zap.Any("recorded person", person),
 			zap.String("error", err.Error()),
 		)
 

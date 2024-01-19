@@ -28,6 +28,11 @@ type CountryGetter interface {
 }
 
 func (s Service) SavePerson(ctx context.Context, person model.PostPersonReq) (model.PersonEntity, error) {
+	s.log.Info("new person adding",
+		zap.String("First name", person.Name),
+		zap.String("Surname", person.Surname),
+		zap.String("Patronymic", person.Patronymic),
+	)
 	var (
 		ageRes     agify.Result
 		genderRes  genderize.Result
@@ -93,7 +98,7 @@ func (s Service) SavePerson(ctx context.Context, person model.PostPersonReq) (mo
 
 			code, chance := mostProbableCountry(countryRes)
 
-			// Передаем данные в слой данных и получаем записанный результат
+			// Создаем ДТО для передачи на слой данных
 			dto := model.PersonDTO{
 				Personality: model.Personality{
 					Name:       person.Name,
@@ -111,6 +116,7 @@ func (s Service) SavePerson(ctx context.Context, person model.PostPersonReq) (mo
 				},
 			}
 
+			// Записываем созданную модель в БД
 			recordedPerson, err := s.Repository.RecordPerson(dto)
 			if err != nil {
 				return model.PersonEntity{}, errors.New("person save error")
