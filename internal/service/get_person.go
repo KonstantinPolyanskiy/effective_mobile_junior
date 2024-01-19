@@ -6,7 +6,7 @@ import (
 )
 
 func (s Service) GetPerson(params model.GetPersonReq) ([]model.PersonEntity, error) {
-	persons, err := s.Repository.SelectPerson(params)
+	persons, err := s.Repository.GetPersonByParams(params)
 	if err != nil {
 		return nil, errors.New("internal server error")
 	}

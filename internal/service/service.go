@@ -7,9 +7,10 @@ import (
 
 type Repository interface {
 	RecordPerson(person model.PersonDTO) (model.PersonEntity, error)
-	EditPerson()
-	DeletePerson(id int) (bool, error)
-	SelectPerson(params model.GetPersonReq) ([]model.PersonEntity, error)
+	EditPerson(id int, person model.PersonDTO) (model.PersonEntity, error)
+	SoftDeletePerson(id int) (bool, error)
+	GetPersonByParams(params model.GetPersonReq) ([]model.PersonEntity, error)
+	GetPersonById(id int) (model.PersonEntity, error)
 }
 
 type Service struct {

@@ -87,8 +87,12 @@ func (s Service) SavePerson(ctx context.Context, person model.PostPersonReq) (mo
 
 			// Передаем данные в слой данных и получаем записанный результат
 			dto := model.PersonDTO{
-				Personality: person.Personality,
-				Age:         model.Age{Age: ageRes.Age},
+				Personality: model.Personality{
+					Name:       person.Name,
+					Surname:    person.Surname,
+					Patronymic: person.Patronymic,
+				},
+				Age: model.Age{Age: ageRes.Age},
 				Gender: model.Gender{
 					Name:        genderRes.Name,
 					Probability: genderRes.Probability,
