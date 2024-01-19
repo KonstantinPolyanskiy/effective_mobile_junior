@@ -5,6 +5,7 @@ import (
 	"go.uber.org/zap"
 )
 
+//go:generate go run github.com/vektra/mockery/v2@v2.28.2 --name=Repository
 type Repository interface {
 	RecordPerson(person model.PersonDTO) (model.PersonEntity, error)
 	EditPerson(id int, person model.PersonDTO) (model.PersonEntity, error)
