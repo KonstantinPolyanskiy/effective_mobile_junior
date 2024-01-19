@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"effective_mobile_junior/internal/handler/mw"
 	"effective_mobile_junior/internal/model"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -28,6 +29,10 @@ func New(log *zap.Logger, service Service) Handler {
 
 func (h Handler) Init() *gin.Engine {
 	r := gin.New()
+
+	l := mw.Logging(h.log)
+
+	r.Use(l)
 
 	r.POST("/person", h.NewPerson)
 	r.GET("/person", h.GetPerson)
