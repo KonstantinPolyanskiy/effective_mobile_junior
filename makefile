@@ -15,6 +15,7 @@ build:
 	$(GOBUILD) -o $(GOBIN)/$(BINARY_NAME) $(MAIN_PACKAGE)
 
 run: build
+	$(GOMOD) tidy
 	$(GOBIN)/$(BINARY_NAME)
 
 clean:
