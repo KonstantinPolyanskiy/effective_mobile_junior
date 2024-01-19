@@ -32,6 +32,7 @@ func NewConnPool(cfg Config) (*pgxpool.Pool, error) {
 	return pool, err
 }
 
+// NewConfig возвращает конфиг с данными для подключения к БД из .env файла
 func NewConfig() Config {
 	return Config{
 		Host:     getEnv("POSTGRES_HOST", "localhost"),
