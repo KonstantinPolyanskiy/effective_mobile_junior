@@ -86,6 +86,11 @@ func (s Service) SavePerson(ctx context.Context, person model.PostPersonReq) (mo
 				return model.PersonEntity{}, errors.New("third-party service returned error")
 			}
 
+			// Проверяем, что если страны
+			if len(countryRes.Country) < 1 {
+				return model.PersonEntity{}, errors.New("no country")
+			}
+
 			code, chance := mostProbableCountry(countryRes)
 
 			// Передаем данные в слой данных и получаем записанный результат
