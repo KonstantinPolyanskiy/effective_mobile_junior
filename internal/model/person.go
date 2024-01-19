@@ -1,7 +1,18 @@
 package model
 
 type PostPersonReq struct {
-	Personality
+	Name       string `json:"name"`
+	Surname    string `json:"surname"`
+	Patronymic string `json:"patronymic,omitempty"`
+}
+
+type PatchPersonReq struct {
+	Name       string `json:"name,omitempty"`
+	Surname    string `json:"surname,omitempty"`
+	Patronymic string `json:"patronymic,omitempty"`
+	Age        int    `json:"age,omitempty"`
+	Gender     `json:",omitempty"`
+	Country    `json:"country,omitempty"`
 }
 
 type Age struct {
@@ -26,13 +37,6 @@ type Country struct {
 	Probability float64 `json:"country_probability" db:"country_probability"`
 }
 
-type PersonDTO struct {
-	Personality
-	Age
-	Gender
-	Country
-}
-
 type PersonEntity struct {
 	PersonId int `json:"person_id" db:"person_id"`
 
@@ -40,6 +44,13 @@ type PersonEntity struct {
 	Age
 	Gender
 	Country
+}
+
+type PersonDTO struct {
+	Personality `json:",omitempty"`
+	Age         `json:",omitempty"`
+	Gender      `json:",omitempty"`
+	Country     `json:",omitempty"`
 }
 
 // GetPersonReq описывает, по каким параметрам и фильтрам нужно отдать пользователей

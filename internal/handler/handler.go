@@ -11,6 +11,7 @@ type Service interface {
 	SavePerson(ctx context.Context, person model.PostPersonReq) (model.PersonEntity, error)
 	GetPerson(params model.GetPersonReq) ([]model.PersonEntity, error)
 	DeletePerson(id int) (bool, error)
+	ChangePerson(id int, updatePerson model.PersonDTO) (model.PersonEntity, error)
 }
 
 type Handler struct {
@@ -31,6 +32,7 @@ func (h Handler) Init() *gin.Engine {
 	r.POST("/person", h.NewPerson)
 	r.GET("/person", h.GetPerson)
 	r.DELETE("/person", h.DeletePerson)
+	r.PATCH("/person", h.PatchPerson)
 
 	return r
 }
