@@ -102,7 +102,7 @@ func (s Service) SavePerson(ctx context.Context, person model.PostPersonReq) (mo
 				},
 				Age: model.Age{Age: ageRes.Age},
 				Gender: model.Gender{
-					Name:        genderRes.Name,
+					Name:        genderRes.Gender,
 					Probability: genderRes.Probability,
 				},
 				Country: model.Country{
