@@ -13,17 +13,17 @@
 <ul>
     <li> [x] Добавление персоны:<br>
         <code> 
-            POST localhost:8080/person <br>
-            {<br>
+            POST localhost:8080/person
+            {
                 &nbsp;&nbsp;&nbsp;&nbsp;"name": "Example Name",
                 &nbsp;&nbsp;&nbsp;&nbsp;"surname": "Example Surname",
                 &nbsp;&nbsp;&nbsp;&nbsp;"patronymic": "Optional Patronymic"
-            <br>}
+            }
         </code>
     </li>
     <li> [x] Удаление (мягкое) персоны:<br>
         <code>
-            DELETE localhost:8080/person?id=1<br>
+            DELETE localhost:8080/person?id=1
         </code>
     </li>
     <li> [x] Получение персон/ы (вариативно: по имени, стране, возрасту (старше чем), с паггинацией и смещением):<br> 
@@ -34,14 +34,14 @@
     <li> [x] Изменение данных сущности по id (с передачей в теле запросов обновленных полей:<br>
         <code>
             PATCH localhost:8080/person?id=1<br>
-            {<br>
+            {
                 &nbsp;&nbsp;&nbsp;&nbsp;"name": "other name", 
                 &nbsp;&nbsp;&nbsp;&nbsp;"surname": "other surname",
                 &nbsp;&nbsp;&nbsp;&nbsp;"patronymic": "other patronymic",
                 &nbsp;&nbsp;&nbsp;&nbsp;"age": 99,
                 &nbsp;&nbsp;&nbsp;&nbsp;"gender_name": "female",
                 &nbsp;&nbsp;&nbsp;&nbsp;"country_code": "FR",
-            <br>}
+            }
         </code>
     </li>
 </ul>
