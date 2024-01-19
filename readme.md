@@ -9,43 +9,55 @@
         <li><a href="https://api.genderize.io/?name=Example">Genderize</a></li>
         <li><a href="https://api.nationalize.io/?name=Example">Nationalize</a></li>
 </ul>
-<p>Реализован функционал:</p>
-<ul>
-    <li> [x] Добавление персоны:<br>
-        <code> 
-            POST localhost:8080/person
-            {
-                &nbsp;&nbsp;&nbsp;&nbsp;"name": "Example Name",
-                &nbsp;&nbsp;&nbsp;&nbsp;"surname": "Example Surname",
-                &nbsp;&nbsp;&nbsp;&nbsp;"patronymic": "Optional Patronymic"
-            }
-        </code>
-    </li>
-    <li> [x] Удаление (мягкое) персоны:<br>
-        <code>
-            DELETE localhost:8080/person?id=1
-        </code>
-    </li>
-    <li> [x] Получение персон/ы (вариативно: по имени, стране, возрасту (старше чем), с паггинацией и смещением):<br> 
-        <code> 
-            GET localhost:8080/person?name=Konstantin&country=RU&older=20&gender=male&limit=5&offset=0
-        </code>
-    </li>
-    <li> [x] Изменение данных сущности по id (с передачей в теле запросов обновленных полей:<br>
-        <code>
-            PATCH localhost:8080/person?id=1<br>
-            {
-                &nbsp;&nbsp;&nbsp;&nbsp;"name": "other name", 
-                &nbsp;&nbsp;&nbsp;&nbsp;"surname": "other surname",
-                &nbsp;&nbsp;&nbsp;&nbsp;"patronymic": "other patronymic",
-                &nbsp;&nbsp;&nbsp;&nbsp;"age": 99,
-                &nbsp;&nbsp;&nbsp;&nbsp;"gender_name": "female",
-                &nbsp;&nbsp;&nbsp;&nbsp;"country_code": "FR",
-            }
-        </code>
-    </li>
-</ul>
-<h2>Использованные библиотеки:</h2>
+   <h2>Реализован функционал:</h2>
+
+   <ul>
+        <li>
+            <h3>Добавление персоны:</h3>
+            <pre>
+                <code>
+                    POST localhost:8080/person
+                    {
+                        "name": "Example Name",
+                        "surname": "Example Surname",
+                        "patronymic": "Optional Patronymic"
+                    }
+                </code>
+            </pre>
+        </li>
+        <li>
+            <h3>Удаление (мягкое) персоны:</h3>
+            <pre>
+                <code>
+                    DELETE localhost:8080/person?id=1
+                </code>
+            </pre>
+        </li>
+        <li>
+            <h3>Получение персон/ы:</h3>
+            <pre>
+                <code>
+                    GET localhost:8080/person?name=Konstantin&country=RU&older=20&gender=male&limit=5&offset=0
+                </code>
+            </pre>
+        </li>
+        <li>
+            <h3>Изменение данных сущности по id:</h3>
+            <pre>
+                <code>
+                    PATCH localhost:8080/person?id=1
+                    {
+                        "name": "other name",
+                        "surname": "other surname",
+                        "patronymic": "other patronymic",
+                        "age": 99,
+                        "gender_name": "female",
+                        "country_code": "FR"
+                    }
+                </code>
+            </pre>
+        </li>
+    </ul><h2>Использованные библиотеки:</h2>
 <ul>
         <li><a href="https://github.com/jackc/pgx">pgx</a> - драйвер PostgresSQL</li>
         <li><a href="https://github.com/uber-go/zap">zap</a> - логгирование</li>
