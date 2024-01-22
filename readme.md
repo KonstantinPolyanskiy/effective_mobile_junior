@@ -81,7 +81,7 @@
             <code>docker compose up</code>
         </li>
         <li>Применить миграции:<br>
-            <code>goose postgres "postgres://konstantin:publicPassword@localhost:5432/postgres?sslmode=disable" up</code>
+            <code>cd db/migrations && goose postgres "postgres://konstantin:publicPassword@localhost:5432/postgres?sslmode=disable" up</code>
         </li>
         <li> Запустить сервис:<br>
             <code>make run</code>
